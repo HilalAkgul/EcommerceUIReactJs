@@ -25,7 +25,7 @@ export default function Product (props:any){
 
     return(
     <>
-           <div className="col-md-4 col-sm-6">
+           <div className="col-md-4 col-sm-6 margin-top0">
              <div className="card mb-30">
               <a className="card-img-tiles" href="#" data-abc="true">
                 <div className="inner">

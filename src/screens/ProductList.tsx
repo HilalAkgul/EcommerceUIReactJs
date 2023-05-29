@@ -4,6 +4,7 @@ import Product from '../lib/components/Product';
 import ServerManager from '../lib/services/ServerManager';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 
 function ProductList() {
   
@@ -51,24 +52,18 @@ function ProductList() {
     
 return(
 
-<div>
+<Container >
     { user!=null && user !=""?
-        
-<section style={{backgroundColor:"#eee"}}>
-<div className="container mt-100">
+   <div className="container py-5">
             <div className="row">
     {productList.map((x:any)=>
-<Product key={x.id} data={x}/>
+    <Product key={x.id} data={x}/>
     )}
     </div>
-  </div>
-</section>
-
-        :<div>Giriş Yapınız</div>
+    </div>
+    :<div>Giriş Yapınız</div>
     }
-
- 
- </div>
+</Container>
 );
 
 }
