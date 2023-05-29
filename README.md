@@ -1,5 +1,5 @@
 # Technologies
-React 18.2.0,react-redux 8.0.5,react-router-dom,typescript,react-bootstrap
+React 18.2.0,react-redux 8.0.5,react-router-dom,typescript,react-bootstrap,axios
 
 
 # Getting Started with Create React App
