@@ -3,10 +3,10 @@ import userReducer from "../lib/reducer/userReducer";
 
 function User(){
     
-    const [currentUser,dispatch]=useReducer(userReducer,{name:"",surname:""});
+    const [currentUser,dispatch]=useReducer(userReducer,{name:"",surname:"",userId:0});
 
     function handleClick(){
-      dispatch({type:'update',data:{name:"hilal",surname:"akgül"}});
+      dispatch({type:'update',data:{name:"hilal",surname:"akgül",userId:0}});
     }
     return(
        <div className="container">

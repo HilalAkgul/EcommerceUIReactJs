@@ -11,7 +11,7 @@ import ServerManager from './lib/services/ServerManager';
 
 function App() {
   const cartState = useSelector((state:any) => state.CartReducer.cartCount)
-  const [cart,setCart] = useState(localStorage.getItem('cartCount'));
+  const [cartCount,setCartCount]=useState(0);
   const user=useSelector((state:any) => state.UserReducer.userId);
   var localUserId=localStorage.getItem('userId');
   var dispatch=useDispatch();
@@ -25,7 +25,7 @@ useEffect(()=>{
     const res = await ServerManager.Carts.getCartCount(localUserId);
 
     if (res.data) {
-      localStorage.setItem('cartCount',res.data);
+      setCartCount(res.data);
       dispatch({
         type:'CartCount',
         payload:res.data
@@ -34,10 +34,7 @@ useEffect(()=>{
     }
    
   };
-
-  fetchCarts();
-
- 
+  fetchCarts(); 
 },[]
 );
   const logout=()=>{
@@ -66,7 +63,7 @@ useEffect(()=>{
          { !(localUserId!=null&& localUserId!="")?null:  <Nav.Link href="/cart">
            Cart
             <Badge>
-            {cartState!=null?cartState:cart}
+            {cartState!=null?cartState:cartCount}
             </Badge>
            </Nav.Link>
             

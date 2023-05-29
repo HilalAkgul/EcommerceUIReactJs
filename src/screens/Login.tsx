@@ -1,12 +1,14 @@
 import React, { useReducer, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import  '../css/login.css';
-import userReducer from '../lib/reducer/userReducer';
 import ServerManager from '../lib/services/ServerManager';
 
 function Login() {
   let navigate = useNavigate();
-  const [currentUser,dispatch]=useReducer(userReducer,{name:"",surname:""});
+  const cartState = useSelector((state:any) => state.CartReducer.cartCount);
+  const user = useSelector((state:any) => state.UserReducer.userId);
+  var dispatch=useDispatch();
    const [username,setusername]=useState('');
    const [password,setpassword]=useState('');
  
@@ -21,16 +23,25 @@ function Login() {
  }
   const onPress = async () => {
 
-    const productListRes =await ServerManager.User.login(username,password);
-   console.log(productListRes);
-    if (productListRes.data.id>0) {
-     
+    const userRes =await ServerManager.User.login(username,password);
+
+    if (userRes.data.userId>0) {
       navigate("/productlist"); 
-      localStorage.setItem('userId',productListRes.data.id );
+      localStorage.setItem('userId',userRes.data.userId );
       dispatch({
         type:'login',
-        data:productListRes.data.id
+        payload:userRes.data.userId
       });
+      const res = await ServerManager.Carts.getCartCount(userRes.data.userId);
+
+    if (res.data) {
+      localStorage.setItem('cartCount',res.data);
+      dispatch({
+        type:'CartCount',
+        payload:res.data
+      });
+      
+    }
     }
     else{
       alert("Kullanıcı bilgileri yanlış")

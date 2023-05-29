@@ -6,11 +6,11 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function ProductList() {
+  
   const [productList, setProductList] = useState([]);
   let navigate = useNavigate();
     const cart = useSelector((state:any) => state.CartReducer.cartCount)
-    const user = 4;
-    //useSelector((state:any) => state.UserReducer.userId);
+    var user =localStorage.getItem('userId');
     var dispatch=useDispatch();
    
     useEffect(() => { 
@@ -52,13 +52,13 @@ function ProductList() {
 return(
 
 <div>
-    { user>0?
+    { user!=null && user !=""?
         
 <section style={{backgroundColor:"#eee"}}>
   <div className="container py-5">
     <div className="row">
     {productList.map((x:any)=>
-<Product data={x}/>
+<Product key={x.id} data={x}/>
     )}
     </div>
   </div>

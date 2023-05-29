@@ -10,18 +10,18 @@ const User = {
   };
   const Products = {
     getProducts: () => axios.get('https://localhost:7027/api/Product/ListProduct'),
-    getProductCarts: (userId:number) => axios.get('https://localhost:7027/api/Product/ProductCartList?userId='+userId+'')
+    getProductCarts: (userId:any) => axios.get('https://localhost:7027/api/Product/ProductCartList?userId='+userId+'')
    
   };
   const Carts = {
-    addCart: (productId:number,userId:number) =>
+    addCart: (productId:number,userId:any) =>
      axios.post('https://localhost:7027/api/Cart/AddCart?productId='+productId+'&userId='+userId+''
       ),
-      removeCart: (productId:number,userId:number) =>
+      removeCart: (productId:number,userId:any) =>
       axios.post('https://localhost:7027/api/Cart/RemoveCart?productId='+productId+'&userId='+userId+''
        ),
-    getCartCount: (userId:number) => axios.get('https://localhost:7027/api/Cart/CartCount?userId='+userId+''),
-    getCartTotalPrice: (userId:number) => axios.get('https://localhost:7027/api/Cart/CartTotalPrice?userId='+userId+'')
+    getCartCount: (userId:any) => axios.get('https://localhost:7027/api/Cart/CartCount?userId='+userId+''),
+    getCartTotalPrice: (userId:any) => axios.get('https://localhost:7027/api/Cart/CartTotalPrice?userId='+userId+'')
    
   };
   export default {

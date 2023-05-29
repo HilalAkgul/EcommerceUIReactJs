@@ -2,22 +2,27 @@ import {useState} from 'react';
 
 const initialUser={
     name:"",
-    surname:""
+    surname:"",
+    userId:0
 }
 
-function userReducer(tasks:any, action:any) {
+function userReducertest(tasks:any, action:any) {
+  console.log(action);
     if (action.type === 'login') {
-   
-      return   {name: action.data.name,
-        surname:action.data.surname };
+      initialUser.name=action.data.name;
+      initialUser.surname=action.data.surname;
+      initialUser.userId=action.data.id;
+      return   initialUser;
     }
     else if (action.type === 'logout') {
-        return   {name: "",
-                  surname:"" };
+      initialUser.name="";
+      initialUser.surname="";
+      initialUser.userId=0;
+      return   initialUser;
       }
     else {
       throw Error('Unknown action: ' + action.type);
     }
   }
 
-  export default userReducer;
+  export default userReducertest;

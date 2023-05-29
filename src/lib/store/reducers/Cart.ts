@@ -4,6 +4,7 @@ const initialState = {
 };
 
 const CartReducer = (state = initialState, action:any) => {
+  console.log(action.payload);
   switch (action.type) {
     
     case 'CartCount':

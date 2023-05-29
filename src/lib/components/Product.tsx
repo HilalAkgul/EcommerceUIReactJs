@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import ServerManager from "../services/ServerManager";
+import swal from 'sweetalert';
 
 export default function Product (props:any){
   const user = useSelector((state:any) => state.UserReducer.userId);
@@ -7,13 +8,15 @@ export default function Product (props:any){
   
   const addCart= async (e:any) => {
     const addProduct = await ServerManager.Carts.addCart(e,user);
-    const res = await ServerManager.Carts.getCartCount(user);
-
-    if (res.data) {
+  
+    if (addProduct.data) {
+      const res = await ServerManager.Carts.getCartCount(user);
       dispatch({
         type:'CartCount',
         payload:res.data
       });
+      swal("Başarıyla Eklendi");
+       
       
     }
   }

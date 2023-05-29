@@ -1,9 +1,10 @@
 
 const initialState = {
-  userId:1
+  userId:null
 };
 
 const UserReducer = (state = initialState, action: any) => {
+  console.log(action.payload);
   switch (action.type) {
 
     case 'login':
@@ -14,7 +15,8 @@ const UserReducer = (state = initialState, action: any) => {
 
     case 'logout':
       return {
-        userId:0
+        ...state, 
+        userId:null
       };
 
     default:
