@@ -10,7 +10,7 @@ function ProductList() {
   const [productList, setProductList] = useState([]);
   let navigate = useNavigate();
     const cart = useSelector((state:any) => state.CartReducer.cartCount)
-    var user =localStorage.getItem('userId');
+    var user =useSelector((state:any) => state.UserReducer.userId);
     var dispatch=useDispatch();
    
     useEffect(() => { 
@@ -55,8 +55,8 @@ return(
     { user!=null && user !=""?
         
 <section style={{backgroundColor:"#eee"}}>
-  <div className="container py-5">
-    <div className="row">
+<div className="container mt-100">
+            <div className="row">
     {productList.map((x:any)=>
 <Product key={x.id} data={x}/>
     )}

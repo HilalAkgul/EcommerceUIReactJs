@@ -46,28 +46,30 @@ useEffect(()=>{
 
   return (
     <BrowserRouter> 
-  <Navbar bg="light" expand="lg">
+      <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="#home">MoveTech</Navbar.Brand>
+        <Navbar.Brand href="#home">Hilal</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
           {
-      (localUserId!=null && localUserId!="")?     <Nav.Link href="/productlist">ProductList</Nav.Link>:null}
-            {
-      (localUserId!=null&& localUserId!="")?   <Nav.Link href="/login" onClick={logout}>Logout</Nav.Link>:
-       <Nav.Link href="/login">Login</Nav.Link>
-        
-     }
-                     
-         { !(localUserId!=null&& localUserId!="")?null:  <Nav.Link href="/cart">
+      (localUserId!=null && localUserId!="")? 
+      <NavLink className={"nav-link"}  to="/productlist">ProductList</NavLink>:null}
+        { !(localUserId!=null&& localUserId!="")?null: 
+         <NavLink className={"nav-link"}  to="/cart">
            Cart
             <Badge>
             {cartState!=null?cartState:cartCount}
             </Badge>
-           </Nav.Link>
+           </NavLink>
             
     }
+               {
+      (localUserId!=null&& localUserId!="")?   
+      <NavLink className={"nav-link"}  to="/login" onClick={logout}>Logout</NavLink>:
+       <NavLink className={"nav-link"} to="/login">Login</NavLink>
+        
+     }
           </Nav>
         </Navbar.Collapse>
       </Container>

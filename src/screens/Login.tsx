@@ -14,11 +14,9 @@ function Login() {
  
 
    const handleUsername = (e:any) => {
-     console.log(e.target.value)
   setusername(e.target.value);
   }
   const handlePassword= (e:any) => {
-    console.log(e.target.value)
  setpassword(e.target.value);
  }
   const onPress = async () => {
@@ -26,6 +24,7 @@ function Login() {
     const userRes =await ServerManager.User.login(username,password);
 
     if (userRes.data.userId>0) {
+      console.log("d"+userRes.data.userId);
       navigate("/productlist"); 
       localStorage.setItem('userId',userRes.data.userId );
       dispatch({
@@ -85,11 +84,4 @@ function Login() {
     );
   }
 
-  
-  
-
   export default Login;
-
-function useHistory() {
-  throw new Error('Function not implemented.');
-}

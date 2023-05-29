@@ -12,10 +12,12 @@ function CartList() {
     const cart = useSelector((state:any) => state.CartReducer.cartCount);
     const user = useSelector((state:any) => state.UserReducer.userId);
     var dispatch=useDispatch();
-    const fetchProducts= async () => {
+  
+    useEffect(() => {  
+      const fetchProducts= async () => {
         const productListRes = await ServerManager.Products.getProductCarts(user);
 
-        if (productListRes.data) {      
+        if (productListRes.data) {    
           setProductList(productListRes.data);     
         }       
       };
@@ -29,11 +31,10 @@ function CartList() {
           setTotalPrice(0);
         }
       };
-
-    useEffect(() => {      
+    
       fetchTotalPrice();
       fetchProducts();
-    },[]);
+    },[cart]);
 
     const onPress = async (productId: number,type:number) => {
       if(type==1){
@@ -53,8 +54,7 @@ function CartList() {
   
       swal("Başarıyla Silindi");
       }
-    fetchTotalPrice();
-    fetchProducts();     
+    
     };
     
 return(
