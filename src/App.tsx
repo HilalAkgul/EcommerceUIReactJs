@@ -6,36 +6,38 @@ import ProductList from './screens/ProductList';
 import { BrowserRouter, Navigate, NavLink, Route, Routes } from 'react-router-dom';
 import { Badge, Container, Nav, Navbar } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ServerManager from './lib/services/ServerManager';
 
 function App() {
-  const cart = useSelector((state:any) => state.CartReducer.cartCount)
-  const user = useSelector((state:any) => state.UserReducer.userId);
-
+  const cartState = useSelector((state:any) => state.CartReducer.cartCount)
+  const [cart,setCart] = useState(localStorage.getItem('cartCount'));
+  const user=useSelector((state:any) => state.UserReducer.userId);
+  var localUserId=localStorage.getItem('userId');
   var dispatch=useDispatch();
-  
+ 
 useEffect(()=>{
-  const fetchCarts= async () => {
-    const res = await ServerManager.Carts.getCartCount(user);
+  const fetchCarts= async () => {  
+    dispatch({
+      type:'login',
+      payload:localUserId
+    });
+    const res = await ServerManager.Carts.getCartCount(localUserId);
 
     if (res.data) {
+      localStorage.setItem('cartCount',res.data);
       dispatch({
         type:'CartCount',
         payload:res.data
       });
       
     }
+   
   };
 
   fetchCarts();
-  const userId=localStorage.getItem('userId');
 
-  dispatch({
-    type:'login',
-    payload:userId
-  });
-
+ 
 },[]
 );
   const logout=()=>{
@@ -54,18 +56,17 @@ useEffect(()=>{
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
           {
-      (user>0)?     <Nav.Link href="/productlist">ProductList</Nav.Link>:null}
+      (localUserId!=null && localUserId!="")?     <Nav.Link href="/productlist">ProductList</Nav.Link>:null}
             {
-      !(user>0)?  <Nav.Link href="/login">Login</Nav.Link>:
-      <Nav.Link href="/login" onClick={logout}>Logout</Nav.Link>
-      
+      (localUserId!=null&& localUserId!="")?   <Nav.Link href="/login" onClick={logout}>Logout</Nav.Link>:
+       <Nav.Link href="/login">Login</Nav.Link>
+        
      }
-           
-            
-         { !(user>0)?null:  <Nav.Link href="/cart">
+                     
+         { !(localUserId!=null&& localUserId!="")?null:  <Nav.Link href="/cart">
            Cart
             <Badge>
-            {cart}
+            {cartState!=null?cartState:cart}
             </Badge>
            </Nav.Link>
             
@@ -76,7 +77,7 @@ useEffect(()=>{
     </Navbar>
       <Routes >
       <Route path="" element={
-     !(user>0)? <Navigate to="/login" />: <Navigate to="/productlist" />
+     !(user!=null && user!="")&&!(localUserId!=null&& localUserId!="")? <Navigate to="/login" />: <Navigate to="/productlist" />
      } />
         
       <Route path="productlist" element={<ProductList />} />
@@ -90,3 +91,4 @@ useEffect(()=>{
 
 
 export default App;
+
